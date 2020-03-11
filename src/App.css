@@ -8,5 +8,21 @@ body {
 }
 
 .App {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+table {
+ width: 100%;
+ background: #000;
+ border-collapse: separate;
+}
+
+thead tr {
+  background: #666;
+  color: #fff;
+}
+
+tr {
+  font-size: 20px;
 }
