@@ -26,3 +26,11 @@ thead tr {
 tr {
   font-size: 20px;
 }
+
+.even {
+  background-color: #999;
+}
+
+.odd {
+  background-color: #ccc;
+}
