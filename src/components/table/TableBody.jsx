@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { getDataThunkCreator } from '../../redux/reducer';
+import { getDataThunkCreator, SORT_RESET } from '../../redux/reducer';
+import { DEFAULT_DATA_LENGTH } from '../../utils/constants';
 
 const DefaultRow = ({ dataRow, index }) => {
   if (index > 20) return false;
@@ -26,11 +27,12 @@ const TableRow = ({ dataRow }) => {
 
   if (activeSort) {
     sortColumn = activeSort.column;
+    sortColumn = (activeSort.sort === SORT_RESET) ? '-1' : sortColumn;
   }
 
   return (
     <tr>
-      {dataRow.map((data, i) => <TableCell key={i} addClass={ (i == sortColumn) ? 'sortColumn' : ''} data={data} />)}
+      {dataRow.map((data, i) => <TableCell key={i} addClass={ (i === sortColumn) ? 'sortColumn' : ''} data={data} />)}
     </tr>
   );
 };
@@ -40,27 +42,19 @@ const TableBody = ({ data, getData }) => {
 
   const renderData = !data ? null : data;
 
-  if (!renderData) {
-    return (
-      <tbody>
-        <tr>
-          <td>Oops!</td>
-        </tr>
-      </tbody>
-    );
-  }
+  if (!renderData) return false;
 
-  if (renderData[0].length < 7) {
+  if (renderData[0].length === DEFAULT_DATA_LENGTH) {
     return (
       <tbody>
-        {renderData.map((dataRow, i) => <TableRow key={i}  dataRow={dataRow} />)}
+        {renderData.map((dataRow, i) => <DefaultRow key={i} dataRow={dataRow} />)}
       </tbody>
     );
   }
 
   return (
     <tbody>
-      {renderData.map((dataRow, i) => <DefaultRow key={i} dataRow={dataRow} />)}
+      {renderData.map((dataRow, i) => <TableRow key={i}  dataRow={dataRow} />)}
     </tbody>
   );
 }

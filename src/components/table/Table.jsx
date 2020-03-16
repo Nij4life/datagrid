@@ -5,7 +5,7 @@ import TableHeaderContainer from './TableHeader';
 const Table = () => {
     return (
       <table>
-        <caption>My table</caption>
+        <caption>Some kind of table</caption>
         <TableHeaderContainer />
         <TableBodyContainer />
       </table>
