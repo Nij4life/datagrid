@@ -7,13 +7,15 @@ const DATA_LOADED_ERROR = 'DATA_LOADED_ERROR';
 export const SORT_ASC = 'SORT_ASC';
 export const SORT_DES = 'SORT_DES';
 
+const headers = ['№', 'Name', 'Surname', 'Age', 'Country', 'Gender', 'Working'];
+
 const initialState = {
   data: null,
+  headers,
   originalData: null,
   defaultData: [...defaultData].map(el => Object.values(el)),
+  activeSort: null,
 };
-
-// ACTION CREATER !
 
 const dataLoaded = (newData) => {
   return { type: DATA_LOADED, newData };
@@ -23,24 +25,10 @@ const dataLoadedError = () => {
   return { type: DATA_LOADED_ERROR };
 }
 
-export const sort = (sortType, index, dataType) => {
-  if (dataType === TYPE_NUMBER) {
-    return SortNumber(sortType, index);
-
-  } else if (dataType === TYPE_STRING) {
-    return SortString(sortType, index);
-  }
+export const sort = (sortType, column) => {
+  return sortType === SORT_ASC ? { type: SORT_ASC, column } : { type: SORT_DES, column };
 }
 
-const SortNumber = (sortType, index) => {
-  return sortType === SORT_ASC ? { type: SORT_ASC, index } : { type: SORT_DES, index };
-}
-
-const SortString = (sortType, index) => {
-  return sortType === SORT_ASC ? { type: SORT_ASC, index } : { type: SORT_DES, index };
-}
-
-// THUNK CREATER !
 export const getDataThunkCreator = () => {
   return (dispatch) => {
     faker(10)
@@ -51,30 +39,33 @@ export const getDataThunkCreator = () => {
   }
 }
 
-// ПЕРЕДЕЛАТЬ С COMBINE_REDUCER!
+
 const reducer = (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case DATA_LOADED:
-      return { data: [...action.newData], originalData: [...action.newData].map(el => [...el]) };
+      return { ...state, data: [...action.newData], originalData: [...action.newData].map(el => [...el]) };
 
     case DATA_LOADED_ERROR:
-      return { data: state.defaultData };
+      return { ...state, data: state.defaultData };
 
     case SORT_ASC:
       return {
+        ...state,
+        activeSort: {column: action.column, sort: SORT_ASC },
         data: [...state.data].map(el => [...el]).sort((a, b) => {
-          if (a[action.index] < b[action.index]) return -1;
-          if (a[action.index] > b[action.index]) return 1;
+          if (a[action.column] < b[action.column]) return -1;
+          if (a[action.column] > b[action.column]) return 1;
           return 0;
         })
       };
 
     case SORT_DES:
       return {
+        ...state,
+        activeSort: {column: action.column, sort: SORT_DES },
         data: [...state.data].map(el => [...el]).sort((a, b) => {
-          if (a[action.index] > b[action.index]) return -1;
-          if (a[action.index] < b[action.index]) return 1;
+          if (a[action.column] > b[action.column]) return -1;
+          if (a[action.column] < b[action.column]) return 1;
           return 0;
         })
       };

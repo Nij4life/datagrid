@@ -1,29 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { sort } from '../../redux/reducer';
-import { TYPE_NUMBER, TYPE_STRING } from '../../utils/constants';
 import SortButtons from './SortButtons';
 
-const TableHeader = ({ sort }) => {
+const TableHeaderCell = ({ column, active, children }) => {
+  return (
+    <th>
+      <div>
+        <span>{children}</span>
+        <SortButtons column={column} active={active} />
+      </div>
+    </th>
+  );
+};
+
+const TableHeader = ({ headers, activeSort }) => {
+  let column, sort;
+  if (activeSort) {
+   ({ column, sort } = activeSort);
+  }
 
   return (
     <thead>
-      <tr>
-        <th>
-          <SortButtons dataType={TYPE_NUMBER} index="0" sort={sort} />
-          №
-        </th>
-        <th>
-          <SortButtons dataType={TYPE_STRING} index="1" sort={sort} />
-          Country
-        </th>
-        <th>Language</th>
-        <th>Hobby</th>
+      <tr className="table-header">
+        {headers.map((el, i) => (
+        <TableHeaderCell key={el} column={i} active={(i == column) ? sort : ''}>
+          {el}
+        </TableHeaderCell>)
+        )}
       </tr>
     </thead>
   );
 }
 
-const TableHeaderContainer = connect(null, { sort })(TableHeader);
+const mapStateToProps = (state) => (
+  {
+    headers: state.headers,
+    activeSort: state.activeSort,
+  }
+);
+
+const TableHeaderContainer = connect(mapStateToProps, null)(TableHeader);
 
 export default TableHeaderContainer;
