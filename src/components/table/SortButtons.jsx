@@ -1,7 +1,4 @@
 import React, { useCallback } from 'react';
-// import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-// import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-// import IconButton from '@material-ui/core/IconButton';
 import { useDispatch } from 'react-redux';
 import { sort, sortReset, SORT_ASC, SORT_DES } from '../../redux/reducer';
 
@@ -20,11 +17,6 @@ const SortButtons = ({ column, active }) => {
 
   const arrowASC = <span className={active === SORT_ASC ? `activeBtn arrowASC` : "arrowASC"} data-sort={SORT_ASC}>▲</span>;
   const arrowDES = <span className={active === SORT_DES ? `activeBtn arrowDES` : "arrowDES"} data-sort={SORT_DES}>▼</span>;
-
-  // const onClickHandler = ({target}) => {
-  //   if (target.tagName !== 'SPAN') return false;
-  //   sort(target.dataset.sort, column, dataType);
-  // };
 
   return (
     <>

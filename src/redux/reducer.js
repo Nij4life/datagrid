@@ -1,6 +1,9 @@
 import faker from '../api/faker';
 import defaultData from '../data/data';
+import { LAST_COLUMN_NUMBER, COUNT_DATA_ELEMENTS } from '../utils/constants';
 
+const ONLY_TRUE = 'ONLY_TRUE';
+const TRUE_AND_FALSE = 'TRUE_AND_FALSE';
 const SEARCH = 'SEARCH';
 const SEARCH_GLOBAL = 'SEARCH_GLOBAL';
 const DATA_LOADED = 'DATA_LOADED';
@@ -13,19 +16,28 @@ export const SORT_RESET = 'SORT_RESET';
 const headers = ['№', 'Name', 'Surname', 'Age', 'Country', 'Birthday', 'In job search'];
 
 const initialState = {
-  data: null,
   headers,
+  data: null,
+  lastData: null,
   originalData: null,
+
   defaultData: [...defaultData].map(el => Object.values(el)),
   activeSort: null,
 };
+
+export const filterOnlyTrue = () => {
+  return { type: ONLY_TRUE };
+}
+
+export const filterTrueAndFalse = () => {
+  return { type: TRUE_AND_FALSE };
+}
 
 export const search = (column, text) => {
   return { type: SEARCH, column, text };
 }
 
 export const searchGlobal = (text) => {
-  console.log('searchGlobal', text);
   return { type: SEARCH_GLOBAL, text };
 }
 
@@ -47,7 +59,7 @@ export const sortReset = (column) => {
 
 export const getDataThunkCreator = () => {
   return (dispatch) => {
-    faker(100)
+    faker(COUNT_DATA_ELEMENTS)
       .then(newData => {
         dispatch(dataLoaded(newData));
       })
@@ -109,6 +121,19 @@ const reducer = (state = initialState, action) => {
         data: [...state.data].map(el => [...el]).filter(row =>
           row.some(cell => cell.toString().includes(action.text))
         ),
+      };
+
+    case ONLY_TRUE:
+      return {
+        ...state,
+        lastData: [...state.data].map(el => [...el]),
+        data: [...state.data].map(el => [...el]).filter(row => row[LAST_COLUMN_NUMBER] === 'yes')
+      };
+
+    case TRUE_AND_FALSE:
+      return {
+        ...state,
+        data: [...state.lastData].map(el => [...el]),
       };
 
     default:

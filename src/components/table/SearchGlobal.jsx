@@ -17,12 +17,13 @@ class SearchGlobal extends React.Component {
 
 
 
-  onKeydownHandler() {
-    console.log('keydown');
+  onKeydownHandler(e) {
+    if (!e.target.classList.contains('search-global__input')) return;
+    if (e.key === 'Enter') this.props.searchGlobal(this.state.value);
   }
 
   onChangeHandler(e) {
-    this.setState({value: e.target.value});
+    this.setState({ value: e.target.value });
   }
 
   onClickHandler() {
@@ -40,7 +41,7 @@ class SearchGlobal extends React.Component {
   render() {
     return (
       <div className="search-global">
-        <input type='text' placeholder="Global search" value={this.state.value} onChange={this.onChangeHandler} />
+        <input className="search-global__input" type='text' placeholder="Global search" value={this.state.value} onChange={this.onChangeHandler} />
         <button type="button" onClick={this.onClickHandler} >Search</button>
       </div>
     );

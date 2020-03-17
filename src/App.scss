@@ -31,6 +31,10 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+
+      &  .input-checkbox {
+          margin-left: 20px;
+        }
       }
     }
 
