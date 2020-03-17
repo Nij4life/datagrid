@@ -16,7 +16,7 @@ const SortButtons = ({ column, active }) => {
     } else {
       dispatch(sort(target.dataset.sort, column));
     }
-  }, []);
+  }, [dispatch]);
 
   const arrowASC = <span className={active === SORT_ASC ? `activeBtn arrowASC` : "arrowASC"} data-sort={SORT_ASC}>▲</span>;
   const arrowDES = <span className={active === SORT_DES ? `activeBtn arrowDES` : "arrowDES"} data-sort={SORT_DES}>▼</span>;

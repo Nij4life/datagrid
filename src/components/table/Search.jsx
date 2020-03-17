@@ -38,7 +38,9 @@ const Search = ({ column }) => {
 
     return (
       <div className="search-block" ref={searchBlock}>
-        <button className="searchBtn" type="button" onClick={onClickHandler} >🔍</button>
+        <span className="searchBtn" role="button" onClick={onClickHandler} >
+          <span role="img" aria-label="search">🔍</span>
+        </span>
         <input
           className="searchInput"
           type="text"

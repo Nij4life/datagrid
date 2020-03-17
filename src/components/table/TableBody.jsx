@@ -32,7 +32,7 @@ const TableRow = ({ dataRow }) => {
 
   return (
     <tr>
-      {dataRow.map((data, i) => <TableCell key={i} addClass={ (i === sortColumn) ? 'sortColumn' : ''} data={data} />)}
+      {dataRow.map((data, i) => <TableCell key={i} addClass={(i === sortColumn) ? 'sortColumn' : ''} data={data} />)}
     </tr>
   );
 };
@@ -44,6 +44,16 @@ const TableBody = ({ data, getData }) => {
 
   if (!renderData) return false;
 
+  if (renderData.length < 1) {
+    return (
+      <tbody>
+        <tr style={{fontSize: 30, textAlign: 'center'}}>
+          <td colSpan='7'> Данных не найдено </td>
+        </tr>
+      </tbody>
+    );
+  }
+  // If getData rejected
   if (renderData[0].length === DEFAULT_DATA_LENGTH) {
     return (
       <tbody>
@@ -54,7 +64,7 @@ const TableBody = ({ data, getData }) => {
 
   return (
     <tbody>
-      {renderData.map((dataRow, i) => <TableRow key={i}  dataRow={dataRow} />)}
+      {renderData.map((dataRow, i) => <TableRow key={i} dataRow={dataRow} />)}
     </tbody>
   );
 }

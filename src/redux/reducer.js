@@ -2,6 +2,7 @@ import faker from '../api/faker';
 import defaultData from '../data/data';
 
 const SEARCH = 'SEARCH';
+const SEARCH_GLOBAL = 'SEARCH_GLOBAL';
 const DATA_LOADED = 'DATA_LOADED';
 const DATA_LOADED_ERROR = 'DATA_LOADED_ERROR';
 export const SORT_ASC = 'SORT_ASC';
@@ -9,7 +10,7 @@ export const SORT_DES = 'SORT_DES';
 export const SORT_RESET = 'SORT_RESET';
 
 
-const headers = ['№', 'Name', 'Surname', 'Age', 'Country', 'Birthday', 'Working'];
+const headers = ['№', 'Name', 'Surname', 'Age', 'Country', 'Birthday', 'In job search'];
 
 const initialState = {
   data: null,
@@ -21,6 +22,11 @@ const initialState = {
 
 export const search = (column, text) => {
   return { type: SEARCH, column, text };
+}
+
+export const searchGlobal = (text) => {
+  console.log('searchGlobal', text);
+  return { type: SEARCH_GLOBAL, text };
 }
 
 const dataLoaded = (newData) => {
@@ -95,6 +101,14 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         data: [...state.data].map(el => [...el]).filter(elem => elem[action.column].includes(action.text)),
+      };
+
+    case SEARCH_GLOBAL:
+      return {
+        ...state,
+        data: [...state.data].map(el => [...el]).filter(row =>
+          row.some(cell => cell.toString().includes(action.text))
+        ),
       };
 
     default:

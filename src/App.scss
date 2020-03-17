@@ -8,6 +8,7 @@ body {
 }
 
 .App {
+  position: relative;
   display: flex;
   justify-content: center;
 
@@ -51,47 +52,57 @@ body {
         text-align: center;
       }
     }
+
+    .SortBtn {
+      margin-left: 10px;
+      background-color: inherit;
+      border: none;
+      outline: none;
+
+      & > span {
+        display: flex;
+        flex-direction: column;
+      }
+
+      & .activeBtn {
+        color: blue;
+      }
+    }
+
+    .search-block {
+      .searchInput {
+        position: absolute;
+        top: 30px;
+        left: 0;
+        display: none;
+        font-size: 18px;
+        background: #dddddddd;
+        z-index: 5;
+      }
+
+      .searchBtn {
+        margin-right: 10px;
+        background: inherit;
+        border: none;
+        outline: none;
+      }
+    }
   }
-}
 
-.SortBtn {
-  background-color: inherit;
-  border: none;
-  outline: none;
-
-  & > span {
-    display: flex;
-    flex-direction: column;
+  .dp-none {
+    display: none !important;
   }
 
-  & .activeBtn {
-    color: blue;
+  .dp-block {
+    display: block !important;
   }
-}
 
-.searchBtn {
-  background: inherit;
-  border: none;
-  outline: none;
-}
-
-.search-block {
-
-  .searchInput {
+  .search-global {
     position: absolute;
-    top: 30px;
-    left: 0;
-    display: none;
-    font-size: 18px;
-    background: #dddddddd;
-    z-index: 5;
+    top: 20px;
+    right: 20px;
   }
 }
 
-.dp-none {
-  display: none !important;
-}
 
-.dp-block {
-  display: block !important;
-}
+
