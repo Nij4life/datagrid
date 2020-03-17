@@ -19,8 +19,8 @@ const initialState = {
   activeSort: null,
 };
 
-export const search = (text) => {
-  return { type: SEARCH, text };
+export const search = (column, text) => {
+  return { type: SEARCH, column, text };
 }
 
 const dataLoaded = (newData) => {
@@ -92,7 +92,10 @@ const reducer = (state = initialState, action) => {
       };
 
     case SEARCH:
-      return {};
+      return {
+        ...state,
+        data: [...state.data].map(el => [...el]).filter(elem => elem[action.column].includes(action.text)),
+      };
 
     default:
       return state;
