@@ -61,7 +61,7 @@ const reducer = (state = initialState, action) => {
     case SORT_ASC:
       return {
         ...state,
-        activeSort: {column: action.column, sort: SORT_ASC },
+        activeSort: { column: action.column, sort: SORT_ASC },
         data: [...state.data].map(el => [...el]).sort((a, b) => {
           if (a[action.column] < b[action.column]) return -1;
           if (a[action.column] > b[action.column]) return 1;
@@ -72,7 +72,7 @@ const reducer = (state = initialState, action) => {
     case SORT_DES:
       return {
         ...state,
-        activeSort: {column: action.column, sort: SORT_DES },
+        activeSort: { column: action.column, sort: SORT_DES },
         data: [...state.data].map(el => [...el]).sort((a, b) => {
           if (a[action.column] > b[action.column]) return -1;
           if (a[action.column] < b[action.column]) return 1;
@@ -80,16 +80,19 @@ const reducer = (state = initialState, action) => {
         }),
       };
 
-      case SORT_RESET:
-        return {
-          ...state,
-          activeSort: {column: action.column, sort: SORT_RESET },
-          data: [...state.data].map(el => [...el]).sort((a, b) => {
-            if (a[action.column] < b[action.column]) return -1;
-            if (a[action.column] > b[action.column]) return 1;
-            return 0;
-          }),
-        };
+    case SORT_RESET:
+      return {
+        ...state,
+        activeSort: { column: action.column, sort: SORT_RESET },
+        data: [...state.data].map(el => [...el]).sort((a, b) => {
+          if (a[action.column] < b[action.column]) return -1;
+          if (a[action.column] > b[action.column]) return 1;
+          return 0;
+        }),
+      };
+
+    case SEARCH:
+      return {};
 
     default:
       return state;

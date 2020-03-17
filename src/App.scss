@@ -78,7 +78,20 @@ body {
 .search-block {
 
   .searchInput {
-    // display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    display: none;
+    font-size: 18px;
+    background: #dddddddd;
+    z-index: 5;
   }
 }
 
+.dp-none {
+  display: none !important;
+}
+
+.dp-block {
+  display: block !important;
+}
