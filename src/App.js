@@ -1,10 +1,13 @@
 import React from 'react';
-import './App.css';
+import Table from './components/table/Table';
+import SearchGlobal from './components/table/SearchGlobal';
+import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <p>App</p>
+      <SearchGlobal />
+      <Table />
     </div>
   );
 }
